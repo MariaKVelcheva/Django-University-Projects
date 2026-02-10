@@ -1,3 +1,10 @@
+"""
+ideas:
+git config --global http.postBuffer 524288006
+Python decouple
+"""
+
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,6 +18,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MY_APPS = [
+    "petstagram.common",
+    "petstagram.accounts",
+    "petstagram.pets",
+    "petstagram.photos"
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -18,11 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "petstagram.common",
-    "petstagram.accounts",
-    "petstagram.pets",
-    "petstagram.photos"
-]
+] + MY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

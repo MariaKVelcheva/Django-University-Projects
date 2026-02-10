@@ -1,4 +1,4 @@
-from django.core.validators import FileExtensionValidator, MinLengthValidator
+from django.core.validators import MinLengthValidator
 from django.db import models
 
 from petstagram.photos.validators import validate_file_size
@@ -6,6 +6,7 @@ from petstagram.photos.validators import validate_file_size
 
 class Photo(models.Model):
     photo = models.ImageField(
+        upload_to="mediafiles",
         validators=[
             validate_file_size,
         ]
@@ -29,6 +30,7 @@ class Photo(models.Model):
     tagged_pets = models.ManyToManyField(
         to='pets.Pet',
         blank=True,
+        related_name='photos',
     )
 
     date_of_publication = models.DateField(
