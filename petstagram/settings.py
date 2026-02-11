@@ -2,6 +2,8 @@
 ideas:
 git config --global http.postBuffer 524288006
 Python decouple
+poetry instead of requirements.txt
+photo_page
 """
 
 
@@ -100,3 +102,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles/'

@@ -5,7 +5,7 @@
 <main>
     <div class="edit-delete edit-photo">
         <h2>Add pet</h2>
-      <form  method="post">
+      <form  method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
             <button class="add-btn" type="submit">Add Pet</button>
