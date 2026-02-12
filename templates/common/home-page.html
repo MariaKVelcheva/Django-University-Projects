@@ -13,7 +13,12 @@
             </form>
         
             {% for photo in photos %}
-            {% include 'common/photo-detail.html' %}
+             {% include 'common/photo-detail.html' with photo=photo %}
+                <a href="{% url 'details-photo' photo.pk %}">
+                        <h4 class="details">See details</h4>
+                </a>
+                                </div>
+            </div>
             {% endfor %}
 
         </div>

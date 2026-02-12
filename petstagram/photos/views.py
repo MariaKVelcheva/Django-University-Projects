@@ -16,6 +16,7 @@ class PhotoAddView(CreateView):
 
 class PhotoDetailsView(DetailView):
     model = Photo
+    pk_url_kwarg = 'photo_id'
     template_name = 'photos/photo-details-page.html'
 
     def get_context_data(self, **kwargs):
@@ -33,6 +34,7 @@ class PhotoDetailsView(DetailView):
 class PhotoEditView(UpdateView):
     model = Photo
     form_class = PhotoEditForm
+    pk_url_kwarg = 'photo_id'
     template_name = 'photos/photo-edit-page.html'
 
     def get_success_url(self):

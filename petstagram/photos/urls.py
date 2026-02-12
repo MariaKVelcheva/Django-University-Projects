@@ -3,7 +3,7 @@ from petstagram.photos import views
 
 urlpatterns = [
     path('create/', views.PhotoAddView.as_view(), name='create-photo'),
-    path('<int:pk>/', include([
+    path('<int:photo_id>/', include([
         path('details/', views.PhotoDetailsView.as_view(), name='details-photo'),
         path('edit/', views.PhotoEditView.as_view(), name='edit-photo'),
     ]))
