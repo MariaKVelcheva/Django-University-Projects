@@ -1,5 +1,6 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from django.views.generic import TemplateView, ListView
+from pyperclip import copy
 
 from petstagram.common.models import Like
 from petstagram.photos.models import Photo
@@ -22,4 +23,11 @@ def like_functionality(request, photo_id):
         like.save()
 
     return redirect(request.META['HTTP_REFERER'] + f"#{photo_id}")
+
+
+def share_functionality(request, photo_id):
+    copy(request.META['HTTP_HOST'] + resolve_url("details-photo", photo_id))
+
+    return redirect(request.META['HTTP_REFERER'] + f"#{photo_id}")
+
 
