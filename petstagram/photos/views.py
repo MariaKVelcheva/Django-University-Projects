@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic.edit import BaseFormView
 
+from petstagram.common.forms import CommentForm
 from petstagram.photos.forms import PhotoCreateForm, PhotoEditForm
 from petstagram.photos.models import Photo
 
@@ -14,8 +16,9 @@ class PhotoAddView(CreateView):
         return reverse_lazy("details-photo", kwargs={'pk': self.object.pk})
 
 
-class PhotoDetailsView(DetailView):
+class PhotoDetailsView(BaseFormView, DetailView):
     model = Photo
+    form_class = CommentForm
     pk_url_kwarg = 'photo_id'
     template_name = 'photos/photo-details-page.html'
 

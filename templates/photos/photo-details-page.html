@@ -10,14 +10,15 @@
 
                     <div class="addComments">
 
-                        <form method="post" action="">
+                        <form method="post" action="{% url 'comment' photo.id %}">
                             {% csrf_token %}
-                            <label for="id_body">Body:</label>
-                            <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                                      required="" id="id_body"></textarea>
+                            {{ form }}
                             <button type="submit">Post</button>
                         </form>
                     </div>
+            <ul>{% for comment in photo.comments.all %}
+                <li>{{ comment.text }}</li>
+            {% endfor %}</ul>
         </div>
     </div>                </div>
             </div>
