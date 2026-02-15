@@ -9,6 +9,14 @@ class CommentForm(forms.ModelForm):
         fields = ['text']
 
         widgets = {
-            "text": forms.Textarea(attrs={'placeholder': 'Your comment here...'}),
+            "text": forms.Textarea(
+                attrs={'placeholder': 'Your comment here...'}
+            ),
         }
 
+
+class SearchForm(forms.Form):
+    pet_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter pet name'},
+        ))

@@ -1,17 +1,30 @@
-from django.shortcuts import redirect, resolve_url
+from django.shortcuts import redirect, resolve_url, render
 from django.views.generic import ListView, CreateView
 from pyperclip import copy
 
-from petstagram.common.forms import CommentForm
+from petstagram.common.forms import CommentForm, SearchForm
 from petstagram.common.models import Like, Comment
 from petstagram.photos.models import Photo
 
 
-class HomePageView(ListView):
-    model = Photo
-    form_class = CommentForm
-    context_object_name = 'photos'
-    template_name = 'common/home-page.html'
+def home_page(request):
+    photos = Photo.objects.all()
+    comment_form = CommentForm()
+    search_form = SearchForm(request.GET or None)
+
+    if search_form.is_valid():
+        photos = photos.filter(
+            tagged_pets__name__icontains=search_form.cleaned_data['pet_name']
+        )
+
+    context = {
+        "photos": photos,
+        "comments": comment_form,
+        "search_form": search_form,
+    }
+
+    return render(request, 'common/home-page.html', context)
+
 
 
 def like_functionality(request, photo_id):
@@ -45,3 +58,4 @@ def add_comment(request, photo_id):
             comment.save()
 
         return redirect(request.META['HTTP_REFERER'] + f"#{photo_id}")
+
