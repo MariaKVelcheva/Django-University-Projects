@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 
+from petstagram.common.forms import CommentForm
 from petstagram.pets.forms import PetCreateForm, PetDeleteForm, PetEditForm
 from petstagram.pets.models import Pet
 
@@ -35,6 +36,14 @@ class PetEditView(UpdateView):
 
 class PetDetailsView(DetailView):
     model = Pet
+    context_object_name = "pet"
     template_name = 'pets/pet-details-page.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['photos'] = self.object.photos.all()
+        context["comment_form"] = CommentForm()
+
+        return context
 
