@@ -13,6 +13,7 @@ class HomePageView(BaseFormView, ListView):
     context_object_name = "photos"
     template_name = 'common/home-page.html'
     form_class = SearchForm
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
