@@ -21,6 +21,10 @@ class HomePageView(BaseFormView, ListView):
         context["comment_form"] = CommentForm()
         context["search_form"] = SearchForm()
 
+        query_dict = self.request.GET.copy()
+        query_dict.pop("page", None)
+        context["query_string"] = query_dict.urlencode()
+
         return context
 
     def get_queryset(self):
