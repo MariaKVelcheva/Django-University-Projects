@@ -8,15 +8,12 @@
 
             <form method="post">
                 {% csrf_token %}
-                <input type="text" placeholder="Username">
-
-                <input type="email" placeholder="Email">
-
-                <input type="password" placeholder="Password">
-
-                <input type="password" placeholder="Repeat Password">
-
-                <!-- Register Button -->
+                {{ form.email }}
+                {{ form.email.errors }}
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+                {{ form.password2 }}
+                {{ form.password.errors }}
                 <button type="submit">Register</button>
             </form>
 
