@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 
-from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm
+from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm, ProfileEditForm
 from petstagram.accounts.models import Profile
 
 UserModel = get_user_model()
@@ -28,8 +28,19 @@ class ProfileDetailsPageView(TemplateView):
     template_name = 'accounts/profile-details-page.html'
 
 
-class ProfileEditPageView(TemplateView):
+class ProfileEditPageView(UpdateView):
+    model = Profile
     template_name = 'accounts/profile-edit-page.html'
+    form_class = ProfileEditForm
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "details-profile",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class AppUserRegisterView(CreateView):
@@ -37,4 +48,8 @@ class AppUserRegisterView(CreateView):
     form_class = AppUserCreationForm
     template_name = 'accounts/register-page.html'
     success_url = reverse_lazy('login')
+
+
+class AppUserLogoutView(LogoutView):
+    pass
 
