@@ -44,5 +44,7 @@ class Photo(models.Model):
         to=UserModel,
         on_delete=models.CASCADE,
         related_name="photos",
+        null=True,
+        blank=True,
     )
 

@@ -59,3 +59,13 @@ class Profile(models.Model):
         null=True,
     )
 
+    def get_profile_name(self):
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        if self.first_name:
+            return self.first_name
+        if self.last_name:
+            return self.last_name
+        return "Anonymous User"
+
+

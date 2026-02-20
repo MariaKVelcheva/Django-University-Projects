@@ -20,11 +20,7 @@
                         </a>
                         <h3>
                             <a href="{% url 'details-profile' photo.user.pk %}">
-                              {% if profile.first_name and profile.last_name %}
-                                {{ profile.first_name }} {{ profile.last_name }}
-                                {% else %}
-                                {{ profile.username }}
-                                {% endif %}
+                                {{ photo.user.profile.get_profile_name }}
                             </a>
                             <br>
                             {% if photo.location %}

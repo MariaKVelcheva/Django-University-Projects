@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 
@@ -21,22 +22,32 @@ class AppUserLoginView(LoginView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProfileDeleteView(LoginRequiredMixin, DeleteView):
-    model = Profile
+class AppUserDeleteView(LoginRequiredMixin, DeleteView):
+    model = UserModel
     success_url = reverse_lazy("home")
     template_name = 'accounts/profile-delete-page.html'
 
     def get_object(self, queryset=None):
-        return self.request.user.profile
+        return self.request.user
+
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return redirect(self.get_success_url())
 
 
-class ProfileDetailsPageView(DetailView):
-    model = Profile
+class AppUserDetailView(DetailView):
+    model = UserModel
     template_name = 'accounts/profile-details-page.html'
-    context_object_name = 'profile'
+    context_object_name = 'user'
 
     def get_object(self, queryset=None):
-        return self.request.user.profile
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_likes_count"] = sum(p.likes_count() for p in self.object.photos.all())
+        return context
 
 
 class ProfileEditPageView(LoginRequiredMixin, UpdateView):

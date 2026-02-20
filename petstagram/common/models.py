@@ -24,6 +24,8 @@ class Comment(models.Model):
         to=UserModel,
         on_delete=models.CASCADE,
         related_name='comments',
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -41,5 +43,7 @@ class Like(models.Model):
         to=UserModel,
         on_delete=models.CASCADE,
         related_name='likes',
+        null=True,
+        blank=True,
     )
 
