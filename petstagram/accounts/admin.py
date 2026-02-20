@@ -18,14 +18,14 @@ class AppUserAdmin(UserAdmin):
     search_fields = ("email", )
     ordering = ("pk", )
 
-    fieldsets = {
+    fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Personal Info", {"fields": ()}),
         ("Permissions", {"fields": ("is_active", "is_staff", "groups", "user_permissions")}),
         ("Important dates", {"fields": ("last_login", )})
-    }
+    )
 
-    add_fieldsets = {
+    add_fieldsets = (
         (
             None,
             {
@@ -33,5 +33,5 @@ class AppUserAdmin(UserAdmin):
                 "fields": ("email", "password1", "password2", ),
             },
         ),
-    }
+    )
 

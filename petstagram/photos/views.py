@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.generic.edit import BaseFormView
@@ -7,10 +8,14 @@ from petstagram.photos.forms import PhotoCreateForm, PhotoEditForm
 from petstagram.photos.models import Photo
 
 
-class PhotoAddView(CreateView):
+class PhotoAddView(LoginRequiredMixin, CreateView):
     model = Photo
     form_class = PhotoCreateForm
     template_name = 'photos/photo-add-page.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("details-photo", kwargs={'pk': self.object.pk})
@@ -33,7 +38,7 @@ class PhotoDetailsView(BaseFormView, DetailView):
         return context
 
 
-class PhotoEditView(UpdateView):
+class PhotoEditView(LoginRequiredMixin, UpdateView):
     model = Photo
     form_class = PhotoEditForm
     template_name = 'photos/photo-edit-page.html'

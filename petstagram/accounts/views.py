@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -20,15 +21,25 @@ class AppUserLoginView(LoginView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProfileDeleteView(TemplateView):
+class ProfileDeleteView(LoginRequiredMixin, DeleteView):
+    model = Profile
+    success_url = reverse_lazy("home")
     template_name = 'accounts/profile-delete-page.html'
 
+    def get_object(self, queryset=None):
+        return self.request.user.profile
 
-class ProfileDetailsPageView(TemplateView):
+
+class ProfileDetailsPageView(DetailView):
+    model = Profile
     template_name = 'accounts/profile-details-page.html'
+    context_object_name = 'profile'
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
 
 
-class ProfileEditPageView(UpdateView):
+class ProfileEditPageView(LoginRequiredMixin, UpdateView):
     model = Profile
     template_name = 'accounts/profile-edit-page.html'
     form_class = ProfileEditForm
@@ -50,6 +61,6 @@ class AppUserRegisterView(CreateView):
     success_url = reverse_lazy('login')
 
 
-class AppUserLogoutView(LogoutView):
+class AppUserLogoutView(LoginRequiredMixin, LogoutView):
     pass
 

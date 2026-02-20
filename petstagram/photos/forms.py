@@ -6,7 +6,7 @@ from petstagram.photos.models import Photo
 class PhotoBaseForm(forms.ModelForm):
     class Meta:
         model = Photo
-        exclude = ("date_of_publication", )
+        exclude = ("date_of_publication", "user",)
 
         labels = {
             "photo": "Photo",

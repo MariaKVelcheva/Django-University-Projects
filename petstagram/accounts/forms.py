@@ -7,6 +7,7 @@ from petstagram.accounts.models import UserModel, Profile
 class AppUserChangeForm(UserChangeForm):
     class Meta:
         model = UserModel
+        fields = "__all__"
 
 
 class AppUserCreationForm(UserCreationForm):

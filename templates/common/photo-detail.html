@@ -8,20 +8,25 @@
                             <div class="profilepic">
                                 <div class="profile_img">
                                     <div class="image">
+                                        {% if photo.user.profile.profile_picture %}
+                                        <img src="{{ photo.user.profile.profile_picture }}" alt=
+                                                "{{ photo.user.profile.username }}'s profile pic">
+                                        {% else %}
                                         <img src="{% static '/images/person.png' %}" alt="img8">
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </a>
                         <h3>
-                            <a href="{% url 'details-profile' %}">
-                                <!-- if user has first name and last name -->
-                                                                Diyan Kalaydzhiev
-                                <!-- else -->
-                                <!-- user username -->
+                            <a href="{% url 'details-profile' photo.user.pk %}">
+                              {% if profile.first_name and profile.last_name %}
+                                {{ profile.first_name }} {{ profile.last_name }}
+                                {% else %}
+                                {{ profile.username }}
+                                {% endif %}
                             </a>
                             <br>
-                            <!-- if the photo has location -->
                             {% if photo.location %}
                             <span>{{ photo.location }}</span>
                             {% endif %}

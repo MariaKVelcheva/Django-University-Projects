@@ -1,4 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+
+
+UserModel = get_user_model()
 
 
 class Comment(models.Model):
@@ -16,6 +20,12 @@ class Comment(models.Model):
         related_name='comments',
     )
 
+    user = models.ForeignKey(
+        to=UserModel,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+
     class Meta:
         ordering = ['-date_time_of_publication']
 
@@ -23,6 +33,12 @@ class Comment(models.Model):
 class Like(models.Model):
     to_photo = models.ForeignKey(
         to='photos.Photo',
+        on_delete=models.CASCADE,
+        related_name='likes',
+    )
+
+    user = models.ForeignKey(
+        to=UserModel,
         on_delete=models.CASCADE,
         related_name='likes',
     )
