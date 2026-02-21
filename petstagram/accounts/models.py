@@ -2,8 +2,31 @@ from django.contrib.auth import models as auth_models, get_user_model
 from django.db import models
 
 from petstagram.accounts.managers import AppUserManager
-from petstagram.accounts.models import UserModel
 
+
+class AppUser(auth_models.AbstractUser, auth_models.PermissionsMixin):
+    email = models.EmailField(
+        unique=True,
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+    )
+
+    is_staff = models.BooleanField(
+        default=False,
+    )
+
+    objects = AppUserManager()
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email
+
+
+UserModel = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -42,6 +65,5 @@ class Profile(models.Model):
             return self.first_name
         if self.last_name:
             return self.last_name
-        return "Anonymous User"
-
+        return "User Anonymous"
 
