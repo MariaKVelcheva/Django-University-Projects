@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
@@ -69,8 +69,13 @@ class AppUserRegisterView(CreateView):
     model = UserModel
     form_class = AppUserCreationForm
     template_name = 'accounts/register-page.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        super().form_valid(form)
+        user = form.save()
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())  #return response, where response is response = super().form_valid()
 
 class AppUserLogoutView(LoginRequiredMixin, LogoutView):
     pass
