@@ -25,7 +25,8 @@ MY_APPS = [
     "petstagram.common",
     "petstagram.accounts",
     "petstagram.pets",
-    "petstagram.photos"
+    "petstagram.photos",
+    "petstagram.books_api",
 ]
 
 INSTALLED_APPS = [
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
 ] + MY_APPS
 
 MIDDLEWARE = [

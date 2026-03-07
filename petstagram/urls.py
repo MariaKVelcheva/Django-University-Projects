@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/', include('petstagram.accounts.urls')),
     path('pets/', include('petstagram.pets.urls')),
     path('photos/', include('petstagram.photos.urls')),
+    path('books/', include("petstagram.books_api.urls")),
 ]
 
 
